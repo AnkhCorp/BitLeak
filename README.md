@@ -1,5 +1,5 @@
 <h1 align="center">BITLEAK</h1>
-<p align="center">Tool for find torrent downloads from an IP Address</p>
+<p align="center">BITLEAK is a Python tool that uses Selenium to automatically check and display torrent downloads linked to a given IP address from the "I Know What You Download" website. It presents the results in a user-friendly format with colored text in the terminal.</p>
 
 ## Install Ubuntu and Debian
 ```
