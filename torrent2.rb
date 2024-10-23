@@ -5,7 +5,6 @@ GREEN  = "\e[32m"
 YELLOW = "\e[33m"
 RESET  = "\e[0m"
 
-# Arte ASCII
 ascii_art = <<-'EOF'
           O
          _|_           BitLeak 1.0
