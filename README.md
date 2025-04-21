@@ -1,15 +1,9 @@
 <h1 align="center">BITLEAK</h1>
-<p align="center">BITLEAK is a Python tool that uses Selenium to automatically check and display torrent downloads linked to a given IP address from the "I Know What You Download" website.</p>
+<p align="center">BITLEAK is a Python tool that check and display torrent downloads linked to a given IP address from the "I Know What You Download" website.</p>
 
 ## Install Ubuntu/Debian
 ```
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-```
-```
-sudo apt install ./google-chrome-stable_current_amd64.deb
-```
-```
-pip install selenium
+pip3 install -r requirements.txt
 ```
 ```
 python bitleak.py
