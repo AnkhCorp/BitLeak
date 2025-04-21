@@ -1,8 +1,5 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+import requests
 from colorama import Fore, Style, init
 
 class TextColor:
@@ -24,41 +21,47 @@ green_text = TextColor.GREEN + text + TextColor.END
 print(green_text)
 print("\033[1mCreated by\033[0m AnkhCorp 1.0")
 
-# Launch Colorama for Windows/Linux
 init(autoreset=True)
 
 def main():
-    torrent = input("Digite o endereço IP: ").strip()
+    torrent = input("Enter the IP address: ").strip()
     url = f"https://iknowwhatyoudownload.com/en/peer/?ip={torrent}"
-
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
-
-    # Start the driver without specifying the path manually
-    driver = webdriver.Chrome(options=chrome_options)
-
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+    }
+    
     try:
-        driver.get(url)
-
-        # Waits until the table is present (30 second timeout)
-        wait = WebDriverWait(driver, 30)
-        table = wait.until(
-            EC.presence_of_element_located((By.CLASS_NAME, "table-condensed"))
-        )
-
-        rows = table.find_elements(By.TAG_NAME, "tr")
-        for row in rows:
-            cells = row.find_elements(By.TAG_NAME, "td")
-            if cells:
-                data = [cell.text for cell in cells[1:]]  # Skip the first column
-                print("\n".join(data)) 
-
+        response = requests.get(url, headers=headers, timeout=30)
+        response.raise_for_status()
+        
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        table = soup.find('table', class_='table-condensed')
+        
+        if table:
+            rows = table.find_all('tr')[1:]
+            
+            if not rows:
+                print("No results found for this IP.")
+                return
+            
+            for row in rows:
+                cells = row.find_all('td')[1:]
+                data = [cell.get_text(strip=True) for cell in cells]
+                print("\n".join(data))
+                print("-" * 40)
+        else:
+            print("Table not found. The website may have changed or the IP has no history.")
+            
+    except requests.exceptions.RequestException as e:
+        print(f"HTTP request error: {str(e)}")
     except Exception as e:
-        print(f"Erro: {str(e)}")
-    finally:
-        driver.quit()
+        print(f"Error: {str(e)}")
 
 if __name__ == "__main__":
     main()
