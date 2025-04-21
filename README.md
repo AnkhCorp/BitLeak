@@ -1,7 +1,9 @@
 <h1 align="center">BITLEAK</h1>
 <p align="center">BITLEAK is a Python tool that check and display torrent downloads linked to a given IP address from the "I Know What You Download" website.</p>
 
-## Install
+```
+git clone https://github.com/AnkhCorp/BitLeak.git
+```
 ```
 pip3 install -r requirements.txt
 ```
