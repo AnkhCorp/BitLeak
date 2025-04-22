@@ -1,5 +1,5 @@
 <h1 align="center">BitLeak</h1>
-<p align="center">BITLEAK is a Python tool that check and display torrent downloads linked to a given IP address from the "I Know What You Download" website.</p>
+<p align="center">BitLeak is a Python tool that check and display torrent downloads linked to a given IP address from the "I Know What You Download" website.</p>
 
 ```
 git clone https://github.com/AnkhCorp/BitLeak.git
